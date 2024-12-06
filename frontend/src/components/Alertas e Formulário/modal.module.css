@@ -1,0 +1,161 @@
+/* Overlay que cobre a tela */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Fundo mais escuro para maior contraste */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px); /* Adiciona desfoque ao fundo */
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Efeito de fade-in ao abrir o modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Conteúdo do Modal */
+.modalContent {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh; /* Limita a altura do modal a 80% da altura da tela */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Sombra moderna */
+  position: relative;
+  transform: translateY(0);
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  animation: scaleUp 0.3s ease-in-out;
+  overflow-y: auto; /* Permite rolagem se o conteúdo exceder a altura */
+}
+
+/* Animação para ampliar o modal */
+@keyframes scaleUp {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Título do Modal */
+.modalTitle {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #16bb1f; /* Linha decorativa */
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+/* Botão de Fechar */
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: #333;
+  color: #ffffff;
+  border: none;
+  font-size: 18px;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.closeButton:hover {
+  background-color: #1e1e1e;
+  transform: scale(1.1); /* Pequeno efeito de zoom */
+}
+
+/* Texto do Modal */
+.pModal {
+  font-size: 1rem;
+  color: #555555;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+strong {
+  color: #333333;
+}
+
+/* Imagem */
+.formImage {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra para destacar a imagem */
+  margin-top: 15px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .modalContent {
+    max-width: 95%;
+    padding: 20px;
+    max-height: 80vh; /* Limita a altura do modal */
+  }
+
+  .modalTitle {
+    font-size: 1.5rem;
+  }
+
+  .pModal {
+    font-size: 0.9rem;
+  }
+
+  .closeButton {
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalContent {
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  .modalTitle {
+    font-size: 1.2rem;
+  }
+
+  .pModal {
+    font-size: 0.8rem;
+  }
+
+  .closeButton {
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+}

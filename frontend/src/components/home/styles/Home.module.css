@@ -1,0 +1,443 @@
+/* Importação da fonte Raleway */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,500;0,600;0,700;1,500;1,600&display=swap');
+
+:root {
+    --font-family: 'Raleway', sans-serif;
+    /* Fonte Raleway */
+}
+
+/* Estilos globais */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family);
+}
+
+/* Corpo da página */
+body {
+    background-color: #f7f7f7;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Cabeçalho */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #001f2d;
+    padding: 20px 40px;
+}
+
+.logo {
+    height: 120px;
+    transition: transform 0.3s ease;
+}
+
+.nav {
+    display: flex;
+    justify-content: flex-start;
+    gap: 30px;
+}
+
+.navLink {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    max-width: 300px;
+}
+
+/* Estilo do menu quando aberto */
+.nav.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    /* Menu será posicionado absolutamente */
+    top: 60px;
+    /* Distância do topo, abaixo da logo */
+    right: 0;
+    /* Alinha o menu à direita */
+    background-color: #001f2d;
+    /* Cor de fundo */
+    padding: 20px;
+    border-radius: 8px;
+    width: auto;
+    /* Ajusta o menu para não ficar grande demais */
+    max-width: 300px;
+    /* Limita a largura máxima do menu */
+    z-index: 1000;
+    /* Garante que o menu fique acima de outros elementos */
+}
+
+/* Caso o menu esteja visível, exibe as opções */
+.nav.open {
+    display: flex;
+}
+
+/* Menu hambúrguer */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    z-index: 2;
+}
+
+/* Ícone do hambúrguer */
+.hamburgerIcon {
+    font-size: 2rem;
+    color: white;
+}
+
+.icon {
+    margin-right: 10px;
+    font-size: 1.5rem;
+}
+
+.navLink:hover {
+    background-color: #16bb1f;
+    color: white;
+}
+
+/* Seção sobre o produto */
+.section {
+    background-color: #f7f7f7;
+    padding: 60px 0;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeInUp 1s forwards 0.5s;
+}
+
+.sectionContent {
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.textContainer {
+    flex: 1;
+    padding-right: 250px;
+}
+
+.subtitle {
+    font-size: 2rem;
+    color: #001f2d;
+    margin-bottom: 20px;
+}
+
+.text {
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.5;
+}
+
+.imageContainer {
+    flex: 1;
+}
+
+.productImage {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards 1s;
+}
+
+/* Cards de funcionalidades */
+.features {
+    background-color: #e9f5f0;
+    padding: 60px 20px;
+    text-align: center;
+    opacity: 0;
+    animation: fadeInUp 1s forwards 1s;
+}
+
+.featuresTitle {
+    font-size: 2rem;
+    color: #001f2d;
+    margin-bottom: 40px;
+}
+
+.featureCards {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.featureCard {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    text-align: center;
+    max-width: 600px;
+    margin: 10px;
+    opacity: 0;
+    animation: fadeInUp 1s forwards 1.5s;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 250px;
+}
+
+.featureCard:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.featureIcon {
+    font-size: 2.5rem;
+    color: #16bb1f;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+}
+
+.featureCard:hover .featureIcon {
+    color: #ea4f97;
+}
+
+.featureCard h4 {
+    font-size: 1.5rem;
+    color: #001f2d;
+    margin-bottom: 10px;
+}
+
+.featureCard p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+
+/* Alertas */
+.alerts {
+    background-color: #f7f7f7;
+    padding: 60px 20px;
+    opacity: 0;
+    animation: fadeInUp 1s forwards 2s;
+}
+
+.alertsTitle {
+    font-size: 2rem;
+    color: #001f2d;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.alertCards {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.alertCard {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    text-align: left;
+    max-width: 600px;
+    margin: 10px;
+    opacity: 0;
+    animation: fadeInUp 1s forwards 1.5s;
+    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: auto;
+}
+
+.alertCard:hover {
+    transform: translateY(-20px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.alertIcon {
+    font-size: 2.5rem;
+    color: #ea4f97;
+    margin-bottom: 15px;
+    transition: color 0.5s ease-out;
+}
+
+.alertCard:hover .alertIcon {
+    color: #16bb1f;
+}
+
+.alertCard ul {
+    list-style: none;
+    padding: 0;
+}
+
+.alertCard li {
+    font-size: 1.1rem;
+    margin-top: 10px;
+    color: #333;
+    margin-bottom: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.4s ease-out, padding 0.4s ease-out, width 0.3s ease-out;
+    width: 100%;
+    overflow: hidden;
+    padding-left: 20px; /* Adiciona um padding à esquerda para mover o texto mais para a direita */
+}
+
+.alertCard li:last-child {
+    border-bottom: none;
+}
+
+.alertCard li strong {
+    color: #16bb1f;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.alertCard li span {
+    font-size: 1rem;
+    color: #555;
+}
+
+.alertCard li:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 20px 0;
+    width: 110%; /* Aumenta a largura do item quando passa o mouse */
+    transition: background-color 0.4s ease-out, padding 0.4s ease-out, width 0.3s ease-out;
+    padding-left: 30px; /* Aumenta o padding da esquerda para mover o texto ainda mais à direita no hover */
+}
+
+/* Rodapé */
+.footer {
+    background-color: #001f2d;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    align-items: flex-end;
+}
+
+/* Animações */
+
+/* Fade In geral */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Fade In para cima (seções e cards) */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Slide In para o cabeçalho */
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Media Queries */
+
+/* Para telas pequenas (móveis) */
+@media screen and (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        padding: 15px;
+        align-items: flex-start;
+        /* Alinha o conteúdo à esquerda */
+        position: relative;
+        /* Necessário para o posicionamento absoluto do hambúrguer */
+    }
+
+    .logo {
+        height: 80px;
+        margin-left: 0;
+        /* Caso tenha algum margem de centralização, ela é removida */
+    }
+
+    .hamburger {
+        display: inline-block;
+        position: absolute;
+        /* Posiciona o hambúrguer no canto direito */
+        top: 20px;
+        /* Ajusta a altura do hambúrguer */
+        right: 20px;
+        /* Coloca no canto direito */
+        z-index: 2;
+        cursor: pointer;
+    }
+
+    .hamburgerIcon {
+        font-size: 2rem;
+        color: white;
+    }
+
+    .nav {
+        display: none;
+    }
+
+    .sectionContent {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .textContainer {
+        padding-right: 0;
+        text-align: center;
+        padding-bottom: 40px;
+    }
+
+    .productImage {
+        max-width: 100%;
+    }
+
+    .features {
+        padding: 40px 20px;
+    }
+
+    .featureCard {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .alertCard {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .footer {
+        padding: 15px;
+    }
+}

@@ -1,0 +1,126 @@
+/* Container principal */
+.alertasContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  color: #333;
+}
+  
+  .content {
+    flex: 1;
+  }
+  /* Título principal */
+  .alertasTitle {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #001f2d;
+    text-align: center;
+    padding: 60px 0;
+  }
+  
+  /* Estilo do subtítulo */
+.subTitle {
+  font-size: 1.5rem; /* Define o tamanho da fonte */
+  font-weight: bold; /* Deixa o subtítulo em negrito */
+  color: #001f2d; /* Cor escura para o subtítulo */
+  margin-bottom: 20px; /* Espaçamento inferior para separar o subtítulo dos itens abaixo */
+  text-align: center; /* Centraliza o texto */
+  letter-spacing: 1px; /* Espaçamento entre as letras para um visual mais elegante */
+}
+
+  /* Loader */
+  .loader {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #777;
+  }
+  
+  /* Lista de alertas */
+  .alertList {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+  
+  /* Item individual de alerta */
+  .alertItem {
+    background: white;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .alertItem:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Texto do alerta */
+  .alertText {
+    margin: 5px 0;
+    line-height: 1.5;
+  }
+  
+  .alertText strong {
+    color: var(--color-details, #16bb1f);
+  }
+
+    /* Estilizando a imagem dentro do formulário */
+  .formImage {
+    width: 100%; /* A imagem vai ocupar toda a largura do contêiner */
+    max-width: 300px; /* Limita a largura máxima da imagem */
+    height: auto; /* Mantém a proporção da imagem */
+    border-radius: 8px; /* Borda arredondada para um estilo mais suave */
+    object-fit: cover; /* Faz a imagem se ajustar ao espaço disponível sem distorcer */
+    margin-top: 10px; /* Espaçamento acima da imagem */
+  }
+
+  .noData {
+    font-size: 18px;
+    color: #777;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom:80px ;
+  }  
+
+  /* Botão para abrir o modal */
+.detailButton {
+  background-color: var(--color-details, #16bb1f); /* Cor de destaque principal */
+  color: white; /* Texto branco para contraste */
+  font-size: 1rem; /* Tamanho da fonte */
+  font-weight: bold; /* Texto em negrito */
+  padding: 7px 8px; /* Espaçamento interno para criar um botão maior */
+  border: none; /* Remove a borda padrão */
+  border-radius: 5px; /* Bordas arredondadas */
+  cursor: pointer; /* Cursor de ponteiro para indicar interatividade */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Transições suaves */
+}
+
+/* Hover e foco no botão */
+.detailButton:hover,
+.detailButton:focus {
+  background-color: var(--color-details-hover, #0d7813); /* Cor mais escura no hover */
+  transform: scale(1.05); /* Leve aumento no tamanho */
+  outline: none; /* Remove borda de foco padrão */
+}
+
+/* Botão ativo */
+.detailButton:active {
+  background-color: var(--color-details-focus, #41ee4a); /* Cor ao ser clicado */
+  transform: scale(1); /* Retorna ao tamanho original */
+}
+
+  .footeTwo {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+  }
