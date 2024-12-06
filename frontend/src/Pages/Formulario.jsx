@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "../firebase/firebaseConfig"; 
+import { storage } from "../firebase/firebaseConfig";
 import styles from './Formulario.module.css'; // Importando o CSS Module
 import Principal from '../components/principal';
 import Footer from '../components/home/Footer';
@@ -121,10 +121,24 @@ const FormularioTeste = () => {
 
       const data = await response.json();
       setSuccessMessage("Formulário criado com sucesso!"); // Exibe a mensagem de sucesso
+
+      // Limpa os campos do formulário após sucesso
+      setFormData({
+        cep: "",
+        rua: "",
+        bairro: "",
+        cidade: "",
+        estado: "",
+        complemento: "",
+        status: "selecione", // Reseta o status para "selecione"
+      });
+      setImagem(null); // Limpa a imagem
+      document.getElementById('imagem').value = ""; // Limpa o valor do input de imagem
     } catch (err) {
       setError(err.message);
     }
   };
+
 
   return (
     <div className={styles.formularioContainer}>
@@ -158,7 +172,7 @@ const FormularioTeste = () => {
               value={formData.rua}
               onChange={handleChange}
               className={styles.input}
-              disabled
+              placeholder="Digite a rua"
             />
           </label>
         </div>
@@ -171,7 +185,7 @@ const FormularioTeste = () => {
               value={formData.bairro}
               onChange={handleChange}
               className={styles.input}
-              disabled
+              placeholder="Digite o bairro"
             />
           </label>
         </div>
@@ -184,7 +198,7 @@ const FormularioTeste = () => {
               value={formData.cidade}
               onChange={handleChange}
               className={styles.input}
-              disabled
+              placeholder="Digite a cidade"
             />
           </label>
         </div>
@@ -197,7 +211,7 @@ const FormularioTeste = () => {
               value={formData.estado}
               onChange={handleChange}
               className={styles.input}
-              disabled
+              placeholder="Digite o estado"
             />
           </label>
         </div>
@@ -278,6 +292,7 @@ const FormularioTeste = () => {
       <Footer />
     </div>
   );
+
 };
 
 export default FormularioTeste;

@@ -52,79 +52,81 @@ function Alertas() {
   };
 
   return (
-    <div className={styles.alertasContainer}>
+    <div><Principal />
       <div className={styles.content}>
-        <Principal />
-        <h1 className={styles.alertasTitle}>Alertas de Poste Inclinado</h1>
+        <div className={styles.alertasContainer}>
 
-        {loading ? (
-          <p className={styles.loader}>Carregando...</p>
-        ) : (
-          <>
-            <h2 className={styles.subTitle}>Lista de Alertas</h2>
-            {alertas.length === 0 ? (
-              <p className={styles.noData}>Nenhum alerta encontrado.</p>
-            ) : (
-              <ul className={styles.alertList}>
-                {alertas.map((alerta) => (
-                  <li key={alerta._id} className={styles.alertItem}>
-                    <p className={styles.alertText}>
-                      <strong>Nome:</strong> {alerta.nome}
-                    </p>
-                    <p className={styles.alertText}>
-                      <strong>Status:</strong> {alerta.status}
-                    </p>
-                    <p className={styles.alertText}>
-                      <strong>Localização:</strong> {alerta.endereco}
-                    </p>
-                    <p className={styles.alertText}>
-                      <strong>Grau de Inclinação:</strong> {alerta.grau_inclinacao}°
-                    </p>
-                    <p className={styles.alertText}>
-                      <strong>Data:</strong> {new Date(alerta.data_hora).toLocaleString()}
-                    </p>
-                    <button
-                      onClick={() => goToPostePage(alerta.nome)} // Navegar para a página do poste
-                      className={styles.detailButton}
-                    >
-                      Ver Detalhes
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
+          <h1 className={styles.alertasTitle}>Alertas de Poste Inclinado</h1>
 
-            <h2 className={styles.subTitle}>Lista de Chamados</h2>
-            {formularios.length === 0 ? (
-              <p className={styles.noData}>Nenhum formulário encontrado.</p>
-            ) : (
-              <ul className={styles.alertList}>
-                {formularios.map((formulario) => (
-                  <li
-                    key={formulario._id}
-                    className={styles.alertItem}
-                  >
-                    <p className={styles.alertText}>
-                      <strong>Bairro:</strong> {formulario.bairro || 'Não especificado.'}
-                    </p>
-                    <p className={styles.alertText}>
-                      <strong>Status:</strong> {formulario.status || 'Não especificado.'}
-                    </p>
-                    <p className={styles.alertText}>
-                      <strong>Solicitação feita:</strong> {new Date(formulario.createdAt).toLocaleString()}
-                    </p>
-                    <button
-                      onClick={() => openModal(formulario)}
-                      className={styles.detailButton}
+          {loading ? (
+            <p className={styles.loader}>Carregando...</p>
+          ) : (
+            <>
+              <h2 className={styles.subTitle}>Lista de Alertas</h2>
+              {alertas.length === 0 ? (
+                <p className={styles.noData}>Nenhum alerta encontrado.</p>
+              ) : (
+                <ul className={styles.alertList}>
+                  {alertas.map((alerta) => (
+                    <li key={alerta._id} className={styles.alertItem}>
+                      <p className={styles.alertText}>
+                        <strong>Nome:</strong> {alerta.nome}
+                      </p>
+                      <p className={styles.alertText}>
+                        <strong>Status:</strong> {alerta.status}
+                      </p>
+                      <p className={styles.alertText}>
+                        <strong>Localização:</strong> {alerta.endereco}
+                      </p>
+                      <p className={styles.alertText}>
+                        <strong>Grau de Inclinação:</strong> {alerta.grau_inclinacao}°
+                      </p>
+                      <p className={styles.alertText}>
+                        <strong>Data:</strong> {new Date(alerta.data_hora).toLocaleString()}
+                      </p>
+                      <button
+                        onClick={() => goToPostePage(alerta.nome)} // Navegar para a página do poste
+                        className={styles.detailButton}
+                      >
+                        Ver Detalhes
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              <h2 className={styles.subTitle}>Lista de Chamados</h2>
+              {formularios.length === 0 ? (
+                <p className={styles.noData}>Nenhum formulário encontrado.</p>
+              ) : (
+                <ul className={styles.alertList}>
+                  {formularios.map((formulario) => (
+                    <li
+                      key={formulario._id}
+                      className={styles.alertItem}
                     >
-                      Ver detalhes
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </>
-        )}
+                      <p className={styles.alertText}>
+                        <strong>Bairro:</strong> {formulario.bairro || 'Não especificado.'}
+                      </p>
+                      <p className={styles.alertText}>
+                        <strong>Status:</strong> {formulario.status || 'Não especificado.'}
+                      </p>
+                      <p className={styles.alertText}>
+                        <strong>Solicitação feita:</strong> {new Date(formulario.createdAt).toLocaleString()}
+                      </p>
+                      <button
+                        onClick={() => openModal(formulario)}
+                        className={styles.detailButton}
+                      >
+                        Ver detalhes
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
+          )}
+        </div>
       </div>
 
       {/* Modal de Detalhes */}
