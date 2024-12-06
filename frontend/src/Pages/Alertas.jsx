@@ -55,7 +55,7 @@ function Alertas() {
     <div className={styles.alertasContainer}>
       <div className={styles.content}>
         <Principal />
-        <h1 className={styles.alertasTitle}>Alertas de Postes Inclinados</h1>
+        <h1 className={styles.alertasTitle}>Alertas de Poste Inclinado</h1>
 
         {loading ? (
           <p className={styles.loader}>Carregando...</p>

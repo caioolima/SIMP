@@ -284,17 +284,17 @@ body {
 
 .alertCard li {
     font-size: 1.1rem;
-    margin-top: 10px;
     color: #333;
     margin-bottom: 12px;
     padding: 16px 0;
     border-bottom: 1px solid #ddd;
     display: flex;
     flex-direction: column;
-    transition: background-color 0.4s ease-out, padding 0.4s ease-out, width 0.3s ease-out;
+    transition: background-color 0.4s ease-out, padding 0.4s ease-out, transform 0.3s ease-out;
     width: 100%;
+    margin-top: 20px;
     overflow: hidden;
-    padding-left: 20px; /* Adiciona um padding à esquerda para mover o texto mais para a direita */
+    padding-left: 10px;
 }
 
 .alertCard li:last-child {
@@ -315,11 +315,11 @@ body {
 .alertCard li:hover {
     background-color: #f1f1f1;
     cursor: pointer;
-    border-radius: 8px;
-    padding: 20px 0;
-    width: 110%; /* Aumenta a largura do item quando passa o mouse */
-    transition: background-color 0.4s ease-out, padding 0.4s ease-out, width 0.3s ease-out;
-    padding-left: 30px; /* Aumenta o padding da esquerda para mover o texto ainda mais à direita no hover */
+    transform: scale(1.0);
+    border-radius: 10px;
+    padding: 18px 30px;
+    /* Aumenta o padding horizontal no hover */
+    transition: background-color 0.3s ease-out, padding 0.3s ease-out, transform 0.3s ease-out;
 }
 
 /* Rodapé */
@@ -421,20 +421,34 @@ body {
 
     .productImage {
         max-width: 100%;
+        border-radius: 0%;
     }
 
     .features {
         padding: 40px 20px;
     }
 
-    .featureCard {
+    .featureCards,
+    .alertCards {
+        flex-direction: column;
+        gap: 15px;
+        padding: 0;
+    }
+
+    .featureCard,
+    .alertCard {
         max-width: 100%;
         height: auto;
     }
 
-    .alertCard {
-        max-width: 100%;
-        height: auto;
+    .featureCard h4,
+    .alertCard h4 {
+        font-size: 1.3rem;
+    }
+
+    .featureCard p,
+    .alertCard p {
+        font-size: 0.9rem;
     }
 
     .footer {

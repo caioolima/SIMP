@@ -97,6 +97,7 @@
   color: white; /* Texto branco para contraste */
   font-size: 1rem; /* Tamanho da fonte */
   font-weight: bold; /* Texto em negrito */
+  margin-top: 13px;
   padding: 7px 8px; /* Espaçamento interno para criar um botão maior */
   border: none; /* Remove a borda padrão */
   border-radius: 5px; /* Bordas arredondadas */
