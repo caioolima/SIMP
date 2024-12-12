@@ -16,12 +16,12 @@ exports.criarOuAtualizarAlerta = async (req, res) => {
 
   // Determinar o status com base no grau de inclinação
   let status = "";
-  if (grau_inclinacao > 5 && grau_inclinacao <= 7) {
-    status = "crítico";
-  } else if (grau_inclinacao > 2 && grau_inclinacao <= 5) {
-    status = "em alerta";
+  if (grau_inclinacao > 100) {
+    status = "crítico";  // Alerta crítico se o grau for maior que 100
+  } else if (grau_inclinacao > 0 && grau_inclinacao <= 100) {
+    status = "em alerta";  // Alerta "em alerta" se o grau for entre 0 e 100
   } else {
-    return res.status(400).send("Grau de inclinação fora das faixas de alerta.");
+    return res.status(400).send("Grau de inclinação inválido.");
   }
 
   try {
