@@ -1,9 +1,22 @@
 import React, { useState } from "react";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase/firebaseConfig";
-import styles from './Formulario.module.css'; // Importando o CSS Module
+import styles from './Formulario.module.css'; 
 import Principal from '../components/principal';
 import Footer from '../components/home/Footer';
+import { 
+  MapPin, 
+  ShieldAlert, 
+  Camera, 
+  Send, 
+  Search, 
+  CheckCircle2, 
+  AlertCircle,
+  FileText,
+  Map,
+  X,
+  UploadCloud
+} from 'lucide-react';
 
 const FormularioTeste = () => {
   const [formData, setFormData] = useState({
@@ -13,34 +26,29 @@ const FormularioTeste = () => {
     cidade: "",
     estado: "",
     complemento: "",
-    status: "selecione", // Alterado para "selecione"
+    status: "selecione",
   });
 
-  const [imagem, setImagem] = useState(null); // Para armazenar o arquivo de imagem
-  const [imagemUrl, setImagemUrl] = useState(""); // Para armazenar a URL da imagem
+  const [imagem, setImagem] = useState(null);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Função para lidar com mudanças nos campos do formulário
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Função para buscar o endereço baseado no CEP
   const fetchEnderecoByCep = async (cep) => {
-    if (cep.length === 9) {  // Verifica se o CEP está completo (no formato 00000-000)
+    const cleanCep = cep.replace(/\D/g, "");
+    if (cleanCep.length === 8) {
       try {
-        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const response = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`);
         const data = await response.json();
-
-        // Verifica se a API retornou um erro
         if (data.erro) {
           setError("CEP não encontrado.");
           return;
         }
-
-        // Atualiza o estado com os dados retornados pela API
         setFormData((prevData) => ({
           ...prevData,
           rua: data.logradouro,
@@ -48,81 +56,77 @@ const FormularioTeste = () => {
           cidade: data.localidade,
           estado: data.uf,
         }));
+        setError("");
       } catch (err) {
-        setError("Erro ao consultar o CEP: " + err.message);
+        setError("Erro na conexão com o serviço de CEP.");
       }
     }
   };
 
-  // Função para lidar com a mudança no campo CEP
   const handleCepChange = (e) => {
-    const cep = e.target.value;
-    setFormData({ ...formData, cep });
-    fetchEnderecoByCep(cep); // Chama a função para buscar o endereço
+    let value = e.target.value.replace(/\D/g, "");
+    if (value.length > 5) {
+      value = value.replace(/^(\d{5})(\d)/, "$1-$2");
+    }
+    if (value.length <= 9) {
+      setFormData({ ...formData, cep: value });
+      if (value.replace(/\D/g, "").length === 8) {
+        fetchEnderecoByCep(value);
+      }
+    }
   };
 
-  // Função para lidar com a imagem
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setImagem(file);
   };
 
-  // Função para remover a imagem
   const handleRemoveImage = () => {
-    setImagem(null); // Limpar o estado da imagem
-    document.getElementById('imagem').value = ""; // Limpar o valor do input de arquivo
+    setImagem(null);
+    document.getElementById('imagem').value = "";
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccessMessage("");
+    setLoading(true);
 
-    // Verifica se o status está no valor "selecione"
     if (formData.status === "selecione") {
-      setError("Por favor, selecione um status válido.");
+      setError("Por favor, selecione a severidade do incidente.");
+      setLoading(false);
       return;
     }
 
-    // Primeiro, envie a imagem para o Firebase Storage e obtenha a URL
     let urlImagem = "";
-
     if (imagem) {
       try {
-        // Criar um nome único para a imagem
         const imageRef = ref(storage, `imagens/${Date.now()}_${imagem.name}`);
         const snapshot = await uploadBytes(imageRef, imagem);
-        urlImagem = await getDownloadURL(snapshot.ref); // Obter a URL da imagem
+        urlImagem = await getDownloadURL(snapshot.ref);
       } catch (err) {
-        setError("Erro ao fazer upload da imagem: " + err.message);
-        return; // Se o upload falhar, sai da função
+        setError("Falha no upload da imagem técnica.");
+        setLoading(false);
+        return;
       }
     }
 
-    // Agora, envie os dados do formulário, incluindo a URL da imagem, para o servidor
     const dataToSend = {
       ...formData,
-      status: "aguardando verificação", // Ajusta o status antes de enviar
-      imagemUrl: urlImagem, // Adiciona a URL da imagem ao objeto de dados
+      status: "aguardando verificação",
+      imagemUrl: urlImagem,
     };
 
     try {
       const response = await fetch("https://simp-a3.onrender.com/api/form", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataToSend),
       });
 
-      if (!response.ok) {
-        throw new Error("Erro ao criar o formulário.");
-      }
+      if (!response.ok) throw new Error("Erro ao registrar no banco de dados.");
 
-      const data = await response.json();
-      setSuccessMessage("Formulário criado com sucesso!"); // Exibe a mensagem de sucesso
-
-      // Limpa os campos do formulário após sucesso
+      setSuccessMessage("RELATÓRIO DE CAMPO TRANSMITIDO COM SUCESSO.");
       setFormData({
         cep: "",
         rua: "",
@@ -130,169 +134,185 @@ const FormularioTeste = () => {
         cidade: "",
         estado: "",
         complemento: "",
-        status: "selecione", // Reseta o status para "selecione"
+        status: "selecione",
       });
-      setImagem(null); // Limpa a imagem
-      document.getElementById('imagem').value = ""; // Limpa o valor do input de imagem
+      setImagem(null);
+      document.getElementById('imagem').value = "";
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-
   return (
-    <div className={styles.formularioContainer}>
+    <div className={styles.page}>
       <Principal />
-      <h1 className={styles.h1}>Reporte um problema, <br />a SIMP te ajuda!</h1>
-
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <div>
-          <label>
-            CEP:
-            <input
-              type="text"
-              name="cep"
-              value={formData.cep}
-              onChange={handleCepChange} // Altere o onChange para handleCepChange
-              required
-              className={styles.input}
-              placeholder="00000-000"
-            />
-          </label>
-          <span id="cepInfo" className={styles.cepInfo}>
-            Insira o CEP no formato: 00000-000
-          </span>
-        </div>
-        <div>
-          <label>
-            Rua:
-            <input
-              type="text"
-              name="rua"
-              value={formData.rua}
-              onChange={handleChange}
-              className={styles.input}
-              placeholder="Digite a rua"
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Bairro:
-            <input
-              type="text"
-              name="bairro"
-              value={formData.bairro}
-              onChange={handleChange}
-              className={styles.input}
-              placeholder="Digite o bairro"
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Cidade:
-            <input
-              type="text"
-              name="cidade"
-              value={formData.cidade}
-              onChange={handleChange}
-              className={styles.input}
-              placeholder="Digite a cidade"
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Estado:
-            <input
-              type="text"
-              name="estado"
-              value={formData.estado}
-              onChange={handleChange}
-              className={styles.input}
-              placeholder="Digite o estado"
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Complemento:
-            <input
-              type="text"
-              name="complemento"
-              value={formData.complemento}
-              onChange={handleChange}
-              className={styles.input}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Status:
-            <select
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-              required
-              className={styles.input}
-            >
-              <option value="selecione">Selecione o status</option>
-              <option value="alerta">Alerta</option>
-              <option value="critico">Crítico</option>
-            </select>
-          </label>
+      
+      <main className={styles.mainContainer}>
+        {/* Header Section */}
+        <div className={styles.pageHeader}>
+           <div className={styles.badge}>v2.5 PROFESSIONAL</div>
+           <h1 className={styles.title}>Relatório de Inspeção de Campo</h1>
+           <p className={styles.subtitle}>Registre incidentes técnicos para despacho imediato da equipe de suporte.</p>
         </div>
 
-        {/* Input para a imagem */}
-        <div>
-          {!imagem ? (
-            <label htmlFor="imagem" className={styles.inputFileLabel}>
-              Selecione uma imagem
-            </label>
-          ) : (
-            <button
-              type="button"
-              className={styles.removeImageButton}
-              onClick={handleRemoveImage}
-            >
-              Remover imagem
-            </button>
-          )}
-          <input
-            type="file"
-            id="imagem"
-            className={styles.inputFile}
-            onChange={handleFileChange}
-            accept="image/*"
-          />
+        <div className={styles.formCard}>
+          <form onSubmit={handleSubmit} className={styles.form}>
+            
+            {/* Seção 1: Localização */}
+            <div className={styles.section}>
+              <div className={styles.sectionTitle}>
+                <MapPin size={18} /> <h2>Dados de Localização</h2>
+              </div>
+              
+              <div className={styles.inputRow}>
+                <div className={styles.inputGroup}>
+                  <label><Search size={14} /> CEP</label>
+                  <input
+                    type="text"
+                    name="cep"
+                    value={formData.cep}
+                    onChange={handleCepChange}
+                    required
+                    placeholder="00000-000"
+                  />
+                </div>
+                <div className={styles.inputGroup} style={{ flex: 2 }}>
+                  <label><Map size={14} /> Logradouro</label>
+                  <input
+                    type="text"
+                    name="rua"
+                    value={formData.rua}
+                    onChange={handleChange}
+                    placeholder="Nome da Via"
+                  />
+                </div>
+              </div>
+
+              <div className={styles.inputRow}>
+                <div className={styles.inputGroup}>
+                  <label>Bairro</label>
+                  <input
+                    type="text"
+                    name="bairro"
+                    value={formData.bairro}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className={styles.inputGroup}>
+                  <label>Cidade</label>
+                  <input
+                    type="text"
+                    name="cidade"
+                    value={formData.cidade}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className={styles.inputGroup} style={{ maxWidth: '80px' }}>
+                  <label>UF</label>
+                  <input
+                    type="text"
+                    name="estado"
+                    value={formData.estado}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label>Ponto de Referência / Complemento</label>
+                <input
+                  type="text"
+                  name="complemento"
+                  value={formData.complemento}
+                  onChange={handleChange}
+                  placeholder="Ex: Próximo ao poste 042"
+                />
+              </div>
+            </div>
+
+            {/* Seção 2: Classificação */}
+            <div className={styles.section}>
+              <div className={styles.sectionTitle}>
+                <ShieldAlert size={18} /> <h2>Classificação de Incidente</h2>
+              </div>
+              <div className={styles.inputGroup}>
+                <label>Severidade Estimada</label>
+                <select
+                  name="status"
+                  value={formData.status}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="selecione">SELECIONAR GRAVIDADE</option>
+                  <option value="alerta">ALERTA PADRÃO [BAIXO]</option>
+                  <option value="critico">CRÍTICO [ALTA PRIORIDADE]</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Seção 3: Evidência */}
+            <div className={styles.section}>
+              <div className={styles.sectionTitle}>
+                <Camera size={18} /> <h2>Evidência Visual</h2>
+              </div>
+              
+              {!imagem ? (
+                <div className={styles.uploadArea}>
+                  <input
+                    type="file"
+                    id="imagem"
+                    className={styles.hiddenInput}
+                    onChange={handleFileChange}
+                    accept="image/*"
+                  />
+                  <label htmlFor="imagem" className={styles.uploadLabel}>
+                    <UploadCloud size={32} />
+                    <span>Upload de Foto Técnica</span>
+                    <small>Arraste ou clique para selecionar</small>
+                  </label>
+                </div>
+              ) : (
+                <div className={styles.previewCard}>
+                  <img src={URL.createObjectURL(imagem)} alt="Preview" />
+                  <div className={styles.previewInfo}>
+                    <span>{imagem.name}</span>
+                    <button type="button" onClick={handleRemoveImage} className={styles.removeBtn}>
+                      <X size={14} /> REMOVER
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Feedback & Submit */}
+            <div className={styles.footer}>
+              {error && (
+                <div className={styles.errorBox}>
+                  <AlertCircle size={16} /> {error}
+                </div>
+              )}
+              {successMessage && (
+                <div className={styles.successBox}>
+                  <CheckCircle2 size={16} /> {successMessage}
+                </div>
+              )}
+
+              <button type="submit" className={styles.submitBtn} disabled={loading}>
+                {loading ? "PROCESSANDO TRANSMISSÃO..." : (
+                  <>REGISTRAR OCORRÊNCIA EM CAMPO <Send size={18} /></>
+                )}
+              </button>
+            </div>
+
+          </form>
         </div>
-
-        {/* Pré-visualização da imagem */}
-        {imagem && (
-          <div className={styles.previewContainer}>
-            <img
-              src={URL.createObjectURL(imagem)}
-              alt="Preview"
-              className={styles.previewImage}
-            />
-            <p className={styles.fileName}>{imagem.name}</p>
-          </div>
-        )}
-
-        <button type="submit" className={styles.buttonSubmit}>
-          Enviar
-        </button>
-
-        {/* Exibe a mensagem de sucesso ou erro abaixo do botão */}
-        {error && <p className={styles.errorMessage}>{error}</p>}
-        {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
-      </form>
+      </main>
 
       <Footer />
     </div>
   );
-
 };
 
 export default FormularioTeste;

@@ -1,148 +1,180 @@
-/* Container principal */
-.alertasContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f9f9f9;
-  color: #333;
-  min-height: 100vh;
+.page {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+  background: var(--bg-dark);
 }
 
-/* Conteúdo principal */
-.content {
+.mapWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  padding: 20px;
-  box-sizing: border-box;
+  height: 100%;
+  z-index: 1;
 }
 
-/* Título principal */
-.alertasTitle {
-  font-size: 2.5rem;
-  font-weight: bold;
-  text-align: center;
-  color: #001f2d;
-  margin-bottom: 40px;
-  padding-top: 40px;
-}
-
-/* Subtítulos */
-.subTitle {
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin-bottom: 50px;
-  color: #004d61;
-}
-
-/* Loader de carregamento */
-.loader {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #555;
-}
-
-/* Mensagem de nenhum dado */
-.noData {
-  text-align: center;
-  font-size: 1rem;
-  color: #999;
-}
-
-/* Lista de alertas */
-.alertList {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: start;
-  gap: 20px;
-  list-style: none;
-  margin-bottom: 60px;
-  max-width: 1400px;
-}
-
-/* Cada item de alerta */
-.alertItem {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 400px;
-  height: auto;
-  box-sizing: border-box;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-  /* Flexbox para alinhar os elementos */
+/* Immersive HUD v5.5 (Breathable Spacing) */
+.hudOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  padding: 8.5rem 2.5rem 2.5rem; /* Puxado para baixo para respirar do Header */
   display: flex;
   flex-direction: column;
+}
+
+.hudHeader { pointer-events: auto; margin-bottom: 2.5rem; }
+.alertasTitle { font-size: 2.2rem; font-weight: 800; color: #fff; letter-spacing: -2px; text-shadow: 0 4px 15px rgba(0,0,0,0.4); margin: 0; }
+
+.hudMain {
+  display: flex;
+  gap: 1.25rem;
+  flex: 1;
+  overflow: hidden;
+  align-items: flex-start;
+  padding-bottom: 3rem; 
+}
+
+/* Elite Glass UI v5.5 (Adjusted for Padding) */
+.glassPanel {
+  pointer-events: auto;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 28px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  /* Adaptive Max Height following the new top padding */
+  max-height: calc(100vh - 19.5rem); 
+  overflow: hidden;
+}
+
+.sidebarHUD { flex: 1; max-width: 410px; }
+
+.hudSectionHeader {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  display: flex;
   justify-content: space-between;
-  /* Garante altura uniforme nos cards */
+  align-items: center;
 }
 
-.alertItem:hover {
-  transform: scale(1.03);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+.hudSectionHeader h3 {
+  color: #0f172a;
+  font-size: 0.75rem;
+  font-weight: 900;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
 }
 
-/* Texto dentro de cada alerta */
-.alertText {
-  font-size: 0.95rem;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.alertText strong {
-  color: #004d61;
-}
-
-/* Botão de detalhes */
-.detailButton {
-  display: inline-block;
-  padding: 8px 16px;
-  background-color: #004d61;
+/* Count & Badges */
+.requestCount, .liveBadge {
+  font-size: 0.55rem;
+  background: var(--bg-dark);
   color: #fff;
-  border: none;
-  border-radius: 4px;
+  padding: 0.35rem 0.8rem;
+  border-radius: 8px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.liveBadge { background: #f1f5f9; color: #059669; border: 1px solid rgba(16, 185, 129, 0.2); }
+.liveCircle { width: 6px; height: 6px; background: #10b981; border-radius: 50%; box-shadow: 0 0 10px #10b981; animation: pulseHUD 2s infinite; }
+@keyframes pulseHUD { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.6); opacity: 0.3; } 100% { transform: scale(1); opacity: 1; } }
+
+.scrollArea {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.25rem 1.75rem 3.5rem; 
+}
+
+.scrollArea::-webkit-scrollbar { width: 4px; }
+.scrollArea::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+
+/* Elite Cards */
+.hudItem {
+  background: #fff;
+  border: 1px solid #f1f5f9;
+  padding: 1.5rem;
+  border-radius: 20px;
+  margin-bottom: 0.85rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 10px;
-  width: 150px;
-  /* Espaço entre o botão e o texto acima */
-  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
 
-.detailButton:hover {
-  background-color: #006d84;
+.hudItem:hover {
+  border-color: var(--primary);
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
 }
 
+.itemMeta { display: flex; justify-content: space-between; margin-bottom: 0.75rem; }
+.itemId { font-family: 'SF Mono', monospace; color: var(--primary); font-size: 0.6rem; font-weight: 700; background: var(--primary-glow); padding: 0.2rem 0.4rem; border-radius: 4px; }
+.itemDate { color: #94a3b8; font-size: 0.6rem; font-weight: 600; }
 
-/* Rodapé estilizado */
-.footerTwo {
-  margin-top: auto;
-  background-color: #001f2d;
-  color: #fff;
-  padding: 20px;
-  text-align: center;
-  font-size: 0.85rem;
+.itemLabel { color: #0f172a; font-size: 1rem; font-weight: 800; margin-bottom: 0.3rem; letter-spacing: -0.5px; }
+.itemSub { color: #64748b; font-size: 0.75rem; display: flex; align-items: center; gap: 0.4rem; line-height: 1.4; }
+
+.itemValue {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f8fafc;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--danger);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-  .alertItem {
-    width: calc(50% - 20px);
-  }
+.itemValue::after { content: 'SENSOR_STATUS'; font-size: 0.55rem; color: #cbd5e1; letter-spacing: 1px; }
+
+/* Elite HUD Button */
+.itemAction {
+  margin-top: 1.25rem;
+  background: transparent;
+  color: var(--primary);
+  border: none;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
 }
 
-@media (max-width: 480px) {
-  .alertItem {
-    width: 100%;
-  }
+.itemAction:hover { transform: translateX(5px); color: var(--bg-dark); }
 
-  .alertasTitle {
-    font-size: 2rem;
-  }
+/* Stats Panel v5.5 */
+.detailPanel { width: 310px; }
+.statHUD { margin-bottom: 0.75rem; padding: 1.5rem; background: #fff; border-radius: 20px; border: 1px solid #f1f5f9; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+.statHUDHeader { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem; color: var(--primary); }
+.statHUD p { font-size: 0.65rem; color: #94a3b8; text-transform: uppercase; font-weight: 800; margin: 0; }
+.statHUD h2 { font-size: 1.8rem; color: #0f172a; margin: 0.2rem 0; font-weight: 900; }
+.healthBar { width: 100%; height: 3px; background: #f1f5f9; border-radius: 10px; margin-top: 0.8rem; overflow: hidden; }
+.healthFill { height: 100%; background: var(--primary); }
 
-  .subTitle {
-    font-size: 1.5rem;
-  }
-}
+.popupContent { color: #0f172a; padding: 0.5rem; }
+.popupContent strong { display: block; font-size: 0.9rem; margin-bottom: 0.1rem; }
+.popupContent button { margin-top: 0.75rem; width: 100%; padding: 0.5rem; background: #0f172a; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 0.75rem; font-weight: 700; }
+
+/* Skeleton */
+.skeletonHUD { background: #f8fafc; border-radius: 20px; position: relative; overflow: hidden; }
+.skeletonHUD::after { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); animation: shimHUD 1.5s infinite; }
+@keyframes shimHUD { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }

@@ -1,161 +1,194 @@
-/* Overlay que cobre a tela */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* Fundo mais escuro para maior contraste */
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  z-index: 5000;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-  backdrop-filter: blur(4px); /* Adiciona desfoque ao fundo */
-  animation: fadeIn 0.3s ease-in-out;
+  padding: 2rem;
+  animation: fadeIn 0.3s ease;
 }
 
-/* Efeito de fade-in ao abrir o modal */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Conteúdo do Modal */
 .modalContent {
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 12px;
-  max-width: 600px;
-  width: 90%;
-  max-height: 80vh; /* Limita a altura do modal a 80% da altura da tela */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Sombra moderna */
+  background: #ffffff;
+  border-radius: 32px;
+  width: 100%;
+  max-width: 950px;
+  max-height: 90vh;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.15);
   position: relative;
-  transform: translateY(0);
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-  animation: scaleUp 0.3s ease-in-out;
-  overflow-y: auto; /* Permite rolagem se o conteúdo exceder a altura */
+  padding: 3.5rem;
+  overflow-y: auto;
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Animação para ampliar o modal */
-@keyframes scaleUp {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* Título do Modal */
-.modalTitle {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #333333;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #16bb1f; /* Linha decorativa */
-  padding-bottom: 10px;
-  text-align: center;
-}
-
-/* Botão de Fechar */
 .closeButton {
   position: absolute;
-  top: 15px;
-  right: 15px;
-  background-color: #333;
-  color: #ffffff;
-  border: none;
-  font-size: 18px;
-  width: 35px;
-  height: 35px;
-  cursor: pointer;
+  top: 2rem;
+  right: 2rem;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
+  border: 1px solid #f1f5f9;
+  background: #fff;
+  color: #64748b;
+  cursor: pointer;
   display: flex;
-  justify-content: center;
   align-items: center;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 
 .closeButton:hover {
-  background-color: #1e1e1e;
-  transform: scale(1.1); /* Pequeno efeito de zoom */
+  background: #f1f5f9;
+  color: #0f172a;
+  transform: rotate(90deg);
 }
 
-/* Texto do Modal */
-.pModal {
+.header {
+  margin-bottom: 2.5rem;
+}
+
+.badge {
+  display: inline-block;
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  letter-spacing: 1px;
+  margin-bottom: 0.75rem;
+}
+
+.modalTitle {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -1px;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.infoCol {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.statGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+}
+
+.value {
   font-size: 1rem;
-  color: #555555;
-  line-height: 1.6;
-  margin: 10px 0;
+  font-weight: 700;
+  color: #334155;
 }
 
-strong {
-  color: #333333;
+.statusBadge {
+  display: inline-flex;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 900;
+  width: fit-content;
 }
 
-/* Imagem */
+.pendente { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.1); }
+.resolvido { background: rgba(16, 185, 129, 0.1); color: #059669; border: 1px solid rgba(16, 185, 129, 0.1); }
+
 .formImage {
   width: 100%;
-  max-width: 400px;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra para destacar a imagem */
-  margin-top: 15px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  border-radius: 20px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  margin-top: 0.5rem;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-  .modalContent {
-    max-width: 95%;
-    padding: 20px;
-    max-height: 80vh; /* Limita a altura do modal */
-  }
-
-  .modalTitle {
-    font-size: 1.5rem;
-  }
-
-  .pModal {
-    font-size: 0.9rem;
-  }
-
-  .closeButton {
-    top: 10px;
-    right: 10px;
-    width: 30px;
-    height: 30px;
-  }
+.noImage {
+  padding: 2rem;
+  background: #f8fafc;
+  border-radius: 12px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  text-align: center;
+  border: 2px dashed #f1f5f9;
 }
 
-@media (max-width: 480px) {
-  .modalContent {
-    padding: 15px;
-    border-radius: 8px;
-  }
+.mapCol {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
 
-  .modalTitle {
-    font-size: 1.2rem;
-  }
+.mapWrapper {
+  width: 100%;
+  height: 350px;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
 
-  .pModal {
-    font-size: 0.8rem;
-  }
+.resolveBtn {
+  margin-top: 1rem;
+  background: #0f172a;
+  color: #fff;
+  border: none;
+  padding: 1.25rem;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+}
 
-  .closeButton {
-    top: 8px;
-    right: 8px;
-    width: 28px;
-    height: 28px;
-    font-size: 16px;
-  }
+.resolveBtn:hover {
+  background: #3b82f6;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; gap: 2rem; }
+  .modalContent { padding: 2rem; }
 }

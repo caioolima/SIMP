@@ -1,457 +1,599 @@
-/* Importação da fonte Raleway */
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,500;0,600;0,700;1,500;1,600&display=swap');
-
-:root {
-    --font-family: 'Raleway', sans-serif;
-    /* Fonte Raleway */
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f8fafc;
 }
 
-/* Estilos globais */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: var(--font-family);
-}
-
-/* Corpo da página */
-body {
-    background-color: #f7f7f7;
-    animation: fadeIn 1s ease-in-out;
-}
-
-/* Cabeçalho */
+/* Solid Glassmorphism Header */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #001f2d;
-    padding: 20px 40px;
+  height: 80px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 0 10%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
 
-.logo {
-    height: 120px;
-    transition: transform 0.3s ease;
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.logoGroup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.logoIcon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #2563eb 0%, #172554 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.15);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logoText {
+  background: linear-gradient(to bottom, #1e293b 30%, #475569 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -2px;
+  margin: 0;
 }
 
 .nav {
-    display: flex;
-    justify-content: flex-start;
-    gap: 30px;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
 }
 
 .navLink {
-    color: white;
-    text-decoration: none;
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-    max-width: 300px;
-}
-
-/* Estilo do menu quando aberto */
-.nav.open {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    /* Menu será posicionado absolutamente */
-    top: 60px;
-    /* Distância do topo, abaixo da logo */
-    right: 0;
-    /* Alinha o menu à direita */
-    background-color: #001f2d;
-    /* Cor de fundo */
-    padding: 20px;
-    border-radius: 8px;
-    width: auto;
-    /* Ajusta o menu para não ficar grande demais */
-    max-width: 300px;
-    /* Limita a largura máxima do menu */
-    z-index: 1000;
-    /* Garante que o menu fique acima de outros elementos */
-}
-
-/* Caso o menu esteja visível, exibe as opções */
-.nav.open {
-    display: flex;
-}
-
-/* Menu hambúrguer */
-.hamburger {
-    display: none;
-    cursor: pointer;
-    z-index: 2;
-}
-
-/* Ícone do hambúrguer */
-.hamburgerIcon {
-    font-size: 2rem;
-    color: white;
-}
-
-.icon {
-    margin-right: 10px;
-    font-size: 1.5rem;
+  color: #475569;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 100px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
 }
 
 .navLink:hover {
-    background-color: #16bb1f;
-    color: white;
+  background: rgba(37, 99, 235, 0.05);
+  color: #2563eb;
 }
 
-/* Seção sobre o produto */
-.section {
-    background-color: #f7f7f7;
-    padding: 60px 0;
-    display: flex;
-    justify-content: center;
-    opacity: 0;
-    animation: fadeInUp 1s forwards 0.5s;
+.hamburger {
+  display: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: #1e293b;
+  z-index: 2001;
 }
 
-.sectionContent {
-    display: flex;
-    align-items: center;
-    max-width: 1200px;
-    width: 100%;
+.hamburgerIcon {
+  width: 28px;
+  height: 28px;
 }
 
-.textContainer {
-    flex: 1;
-    padding-right: 250px;
+.main {
+  width: 100%;
+  flex: 1;
 }
 
-.subtitle {
-    font-size: 2rem;
-    color: #001f2d;
-    margin-bottom: 20px;
+/* Cinematic Hero Section */
+.heroSection {
+  padding: 8rem 10% 6rem;
+  background: radial-gradient(circle at center, rgba(37, 99, 235, 0.05) 0%, transparent 70%);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
 }
 
-.text {
-    font-size: 1.1rem;
-    color: #333;
-    line-height: 1.5;
+.heroSection::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: radial-gradient(rgba(37, 99, 235, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  opacity: 0.6;
 }
 
-.imageContainer {
-    flex: 1;
+.heroContent {
+  max-width: 900px;
+  margin: 0 auto;
+  animation: slideUp 0.8s ease-out;
 }
 
-.productImage {
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-    object-fit: cover;
-    border-radius: 10px;
-    opacity: 0;
-    animation: fadeIn 1.5s forwards 1s;
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #fff;
+  color: #2563eb;
+  padding: 0.65rem 1.5rem;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin-bottom: 2rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-/* Cards de funcionalidades */
-.features {
-    background-color: #e9f5f0;
-    padding: 60px 20px;
-    text-align: center;
-    opacity: 0;
-    animation: fadeInUp 1s forwards 1s;
+.heroPulse {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulse-dot 1.5s infinite;
 }
 
-.featuresTitle {
-    font-size: 2rem;
-    color: #001f2d;
-    margin-bottom: 40px;
+@keyframes pulse-dot {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.8); opacity: 0.5; }
 }
 
-.featureCards {
-    display: flex;
-    justify-content: space-around;
-    gap: 20px;
-    flex-wrap: wrap;
+.heroTitle {
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  line-height: 1;
+  color: #1e293b;
+  margin-bottom: 2rem;
+  letter-spacing: -3px;
+  font-weight: 900;
 }
 
-.featureCard {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    flex: 1;
-    text-align: center;
-    max-width: 600px;
-    margin: 10px;
-    opacity: 0;
-    animation: fadeInUp 1s forwards 1.5s;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
+.heroTitle span {
+  background: linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.heroDescription {
+  font-size: 1.25rem;
+  color: #64748b;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  line-height: 1.6;
+}
+
+.heroDescription strong {
+  color: #1e293b;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+}
+
+.heroActions {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.primaryBtn {
+  background: #2563eb !important;
+  background: linear-gradient(135deg, #2563eb 0%, #172554 100%) !important;
+  color: #fff !important;
+  padding: 1.25rem 2.8rem;
+  border-radius: 16px;
+  text-decoration: none;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.primaryBtn:hover {
+  transform: translateY(-7px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(37, 99, 235, 0.5);
+  filter: brightness(1.1);
+}
+
+.secondaryBtn {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--primary);
+  padding: 1.25rem 2.8rem;
+  border-radius: 16px;
+  text-decoration: none;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  border: 2.5px solid var(--primary);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.secondaryBtn:hover {
+  background: #2563eb;
+  color: #fff;
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(37, 99, 235, 0.2);
+}
+
+/* Bento Grid System */
+.bentoSection {
+  padding: 2rem 10% 8rem;
+}
+
+.bentoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(320px, auto);
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.bentoItem {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  padding: 3rem;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.bentoItem:hover {
+  border-color: #2563eb;
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+}
+
+.bentoIcon {
+  font-size: 2rem;
+  color: #2563eb;
+  margin-bottom: 1.5rem;
+}
+
+.bentoInfo h3 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: #0f172a;
+}
+
+.bentoInfo p {
+  color: #475569;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* Specific Card Rules */
+.featureOne { grid-column: span 1; }
+.featureTwo { 
+  grid-column: span 2; 
+  background: #0f172a; 
+  color: #fff; 
+}
+.featureTwo h3 { color: #fff; }
+.featureTwo p { color: #94a3b8; }
+
+/* Special Bento: Alerts List */
+.alertsBento {
+  grid-column: span 1;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+.bentoHeader {
+  padding: 2.5rem 2.5rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.bentoHeader h3 {
+  font-size: 1.25rem !important;
+  margin: 0 !important;
+  color: #1e293b !important;
+}
+
+.bentoAlertList {
+  flex: 1;
+  padding: 1.5rem 2.5rem;
+}
+
+/* Re-using these internal list styles */
+.compactList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.compactItem {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.compactItem:last-child { border-bottom: none; }
+
+.compactMain {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.compactLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.compactItem strong {
+  font-size: 1rem;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.compactTime {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ef4444; /* Default critico */
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+}
+
+.compactAddr {
+  font-size: 0.8rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.viewMoreBento {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1.25rem;
+  background: #f8fafc;
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.viewMoreBento:hover {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+
+.statsBento {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #2563eb;
+  color: #fff;
+  padding: 0;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.statBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+}
+
+.statBox:last-child { border-right: none; }
+
+.statValue {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.8rem;
+  font-weight: 700;
+  opacity: 0.8;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.bentoTag {
+  background: #10b981;
+  color: #fff;
+  padding: 1.15rem;
+  text-align: center;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.managementBento {
+  grid-column: span 2;
+  background: rgba(16, 185, 129, 0.05);
+  border-color: rgba(16, 185, 129, 0.2);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.managementBento h3 {
+  margin: 2.5rem 3rem 1rem !important;
+  color: #065f46 !important;
+}
+
+.managementBento p {
+  margin: 0 3rem 2.5rem !important;
+  color: #047857 !important;
+}
+
+.managementBento .bentoIcon {
+  margin: 2.5rem 3rem 0;
+  font-size: 2.2rem;
+  color: #10b981;
+}
+
+.maintenanceDetail {
+  margin-top: auto;
+  padding: 2.5rem 3rem;
+  background: rgba(16, 185, 129, 0.08);
+  border-top: 1px dashed rgba(16, 185, 129, 0.2);
+}
+
+.detailRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.detailRow span {
+  font-weight: 600;
+  color: #064e3b;
+  font-size: 0.95rem;
+}
+
+.activeStatus {
+  background: #10b981;
+  color: #fff;
+  padding: 0.35rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* Live Badges */
+.liveBadge, .aiBadge {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.liveBadge { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+.aiBadge { background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2); }
+
+/* Technical Specs */
+.techSpecs, .aiSpecs {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.spec {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.aiSpecs .spec { color: #f8fafc; }
+
+.specPoint, .aiPoint {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+}
+
+.specPoint { background: #2563eb; }
+.aiPoint { background: #3b82f6; box-shadow: 0 0 8px #3b82f6; }
+
+/* Responsive Media Queries */
+@media (max-width: 1200px) {
+  .bentoGrid { grid-template-columns: repeat(2, 1fr); }
+  .featureTwo, .statsBento, .managementBento { grid-column: span 2 !important; }
+}
+
+@media (max-width: 768px) {
+  .header { padding: 0 1.5rem; }
+  .hamburger { display: flex; }
+  
+  .nav {
+    display: none;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    height: 250px;
-}
-
-.featureCard:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-}
-
-.featureIcon {
-    font-size: 2.5rem;
-    color: #16bb1f;
-    margin-bottom: 20px;
-    transition: color 0.3s ease;
-}
-
-.featureCard:hover .featureIcon {
-    color: #ea4f97;
-}
-
-.featureCard h4 {
-    font-size: 1.5rem;
-    color: #001f2d;
-    margin-bottom: 10px;
-}
-
-.featureCard p {
-    font-size: 1rem;
-    color: #555;
-    line-height: 1.4;
-    margin-bottom: 10px;
-}
-
-/* Alertas */
-.alerts {
-    background-color: #f7f7f7;
-    padding: 60px 20px;
-    opacity: 0;
-    animation: fadeInUp 1s forwards 2s;
-}
-
-.alertsTitle {
-    font-size: 2rem;
-    color: #001f2d;
-    margin-bottom: 40px;
-    text-align: center;
-}
-
-.alertCards {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.alertCard {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    flex: 1;
-    text-align: left;
-    max-width: 600px;
-    margin: 10px;
-    opacity: 0;
-    animation: fadeInUp 1s forwards 1.5s;
-    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease-out;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
-    height: auto;
-}
-
-.alertCard:hover {
-    transform: translateY(-20px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.alertIcon {
-    font-size: 2.5rem;
-    color: #ea4f97;
-    margin-bottom: 15px;
-    transition: color 0.5s ease-out;
-}
-
-.alertCard:hover .alertIcon {
-    color: #16bb1f;
-}
-
-.alertCard ul {
-    list-style: none;
-    padding: 0;
-}
-
-.alertCard li {
-    font-size: 1.1rem;
-    color: #333;
-    margin-bottom: 12px;
-    padding: 16px 0;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    flex-direction: column;
-    transition: background-color 0.4s ease-out, padding 0.4s ease-out, transform 0.3s ease-out;
+    position: fixed;
+    top: 80px;
+    left: 0;
     width: 100%;
-    margin-top: 20px;
-    overflow: hidden;
-    padding-left: 10px;
+    height: calc(100vh - 80px);
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    padding: 2rem;
+    gap: 1.5rem;
+    z-index: 3000;
+  }
+
+  .nav.open { display: flex; }
+
+  .bentoGrid { grid-template-columns: 1fr; }
+  .bentoItem, .featureTwo, .statsBento, .managementBento { grid-column: span 1 !important; }
+  
+  .heroTitle { font-size: 2.5rem; }
+  .statValue { font-size: 3rem; }
+  .bentoItem { padding: 2.5rem 1.5rem; }
 }
 
-.alertCard li:last-child {
-    border-bottom: none;
-}
-
-.alertCard li strong {
-    color: #16bb1f;
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-
-.alertCard li span {
-    font-size: 1rem;
-    color: #555;
-}
-
-.alertCard li:hover {
-    background-color: #f1f1f1;
-    cursor: pointer;
-    transform: scale(1.0);
-    border-radius: 10px;
-    padding: 18px 30px;
-    /* Aumenta o padding horizontal no hover */
-    transition: background-color 0.3s ease-out, padding 0.3s ease-out, transform 0.3s ease-out;
-}
-
-/* Rodapé */
-.footer {
-    background-color: #001f2d;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    align-items: flex-end;
-}
-
-/* Animações */
-
-/* Fade In geral */
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-/* Fade In para cima (seções e cards) */
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Slide In para o cabeçalho */
-@keyframes slideIn {
-    0% {
-        transform: translateX(-100%);
-    }
-
-    100% {
-        transform: translateX(0);
-    }
-}
-
-/* Media Queries */
-
-/* Para telas pequenas (móveis) */
-@media screen and (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        padding: 15px;
-        align-items: flex-start;
-        /* Alinha o conteúdo à esquerda */
-        position: relative;
-        /* Necessário para o posicionamento absoluto do hambúrguer */
-    }
-
-    .logo {
-        height: 80px;
-        margin-left: 0;
-        /* Caso tenha algum margem de centralização, ela é removida */
-    }
-
-    .hamburger {
-        display: inline-block;
-        position: absolute;
-        /* Posiciona o hambúrguer no canto direito */
-        top: 20px;
-        /* Ajusta a altura do hambúrguer */
-        right: 20px;
-        /* Coloca no canto direito */
-        z-index: 2;
-        cursor: pointer;
-    }
-
-    .hamburgerIcon {
-        font-size: 2rem;
-        color: white;
-    }
-
-    .nav {
-        display: none;
-    }
-
-    .sectionContent {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .textContainer {
-        padding-right: 0;
-        text-align: center;
-        padding-bottom: 40px;
-    }
-
-    .productImage {
-        max-width: 100%;
-        border-radius: 0%;
-    }
-
-    .features {
-        padding: 40px 20px;
-    }
-
-    .featureCards,
-    .alertCards {
-        flex-direction: column;
-        gap: 15px;
-        padding: 0;
-    }
-
-    .featureCard,
-    .alertCard {
-        max-width: 100%;
-        height: auto;
-    }
-
-    .featureCard h4,
-    .alertCard h4 {
-        font-size: 1.3rem;
-    }
-
-    .featureCard p,
-    .alertCard p {
-        font-size: 0.9rem;
-    }
-
-    .footer {
-        padding: 15px;
-    }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }

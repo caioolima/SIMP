@@ -1,40 +1,42 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaExclamationTriangle, FaClipboardCheck, FaBars } from 'react-icons/fa';
+import { Cpu, ShieldAlert, ClipboardCheck, Menu } from 'lucide-react';
 import styles from './styles/Home.module.css';
 
 const Header = ({ toggleMenu, isMobileMenuOpen }) => {
-  const location = useLocation(); // Obtém a localização atual da rota
-  const isAlertasPage = location.pathname === '/alertas'; // Verifica se a rota atual é "/alertas"
-  const isRelatarPage = location.pathname === '/relatar'; // Verifica se a rota atual é "/relatar"
+  const location = useLocation(); 
+  const isAlertasPage = location.pathname === '/alertas'; 
+  const isRelatarPage = location.pathname === '/relatar'; 
 
   return (
     <header className={styles.header}>
       <div className={styles.logoContainer}>
-        {/* Fazendo a logo ser clicável e redirecionar para a página inicial */}
         <Link to="/" className={styles.logoLink}>
-          <img src="/images/logo.png" alt="Logo" className={styles.logo} />
+          <div className={styles.logoGroup}>
+            <div className={styles.logoIcon}>
+              <Cpu size={22} />
+            </div>
+            <span className={styles.logoText}>SIMP</span>
+          </div>
         </Link>
       </div>
       <nav className={`${styles.nav} ${isMobileMenuOpen ? styles.open : ''}`}>
-        {/* Só exibe "Ver Alertas" se não estiver na página de alertas */}
         {!isAlertasPage && (
           <Link to="/alertas" className={styles.navLink}>
-            <FaExclamationTriangle className={styles.icon} />
+            <ShieldAlert className={styles.icon} size={18} />
             Ver Alertas
           </Link>
         )}
         
-        {/* Só exibe "Relatar Problema" se não estiver na página de relatórios */}
         {!isRelatarPage && (
           <Link to="/relatar" className={styles.navLink}>
-            <FaClipboardCheck className={styles.icon} />
+            <ClipboardCheck className={styles.icon} size={18} />
             Relatar Problema
           </Link>
         )}
       </nav>
       <div className={styles.hamburger} onClick={toggleMenu}>
-        <FaBars className={styles.hamburgerIcon} />
+        <Menu className={styles.hamburgerIcon} />
       </div>
     </header>
   );
