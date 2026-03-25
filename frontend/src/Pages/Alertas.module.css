@@ -12,7 +12,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  /* Removed z-index to allow Leaflet Popups to naturally sit above UI without breaking stacking context */
 }
 
 /* Immersive HUD v5.5 (Breathable Spacing) */
@@ -23,7 +23,7 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 10;
+  z-index: 650; /* Above Leaflet Markers (600) but Below Popups (700) */
   padding: 8.5rem 2.5rem 2.5rem; /* Puxado para baixo para respirar do Header */
   display: flex;
   flex-direction: column;
@@ -45,8 +45,8 @@
 .glassPanel {
   pointer-events: auto;
   background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(30px) saturate(200%);
-  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 28px;
   box-shadow: 0 25px 50px rgba(0,0,0,0.08);
@@ -121,7 +121,7 @@
 }
 
 .itemMeta { display: flex; justify-content: space-between; margin-bottom: 0.75rem; }
-.itemId { font-family: 'SF Mono', monospace; color: var(--primary); font-size: 0.6rem; font-weight: 700; background: var(--primary-glow); padding: 0.2rem 0.4rem; border-radius: 4px; }
+.itemId { font-family: 'SF Mono', monospace; color: var(--primary); font-size: 0.6rem; font-weight: 700; background: rgba(37, 99, 235, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; }
 .itemDate { color: #94a3b8; font-size: 0.6rem; font-weight: 600; }
 
 .itemLabel { color: #0f172a; font-size: 1rem; font-weight: 800; margin-bottom: 0.3rem; letter-spacing: -0.5px; }
@@ -133,7 +133,7 @@
   border-top: 1px solid #f8fafc;
   font-size: 1.5rem;
   font-weight: 900;
-  color: var(--danger);
+  color: #ef4444;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -172,9 +172,72 @@
 
 .popupContent { color: #0f172a; padding: 0.5rem; }
 .popupContent strong { display: block; font-size: 0.9rem; margin-bottom: 0.1rem; }
-.popupContent button { margin-top: 0.75rem; width: 100%; padding: 0.5rem; background: #0f172a; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 0.75rem; font-weight: 700; }
+.popupContent button { margin-top: 0.75rem; width: 100%; padding: 0.5rem; background: #0f172a; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 0.75rem; font-weight: 700; transition: background 0.2s ease; }
+.popupContent button:hover { background: var(--primary); }
 
 /* Skeleton */
 .skeletonHUD { background: #f8fafc; border-radius: 20px; position: relative; overflow: hidden; }
 .skeletonHUD::after { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); animation: shimHUD 1.5s infinite; }
 @keyframes shimHUD { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+/* 📱 Mobile Responsiveness (Modern Bottom Sheet Architecture) */
+@media (max-width: 768px) {
+  .hudOverlay {
+    padding: 0;
+    justify-content: flex-end; /* Push panels to the bottom half */
+  }
+
+  .hudHeader {
+    position: absolute;
+    top: 5rem;
+    left: 1.5rem;
+    pointer-events: none;
+  }
+
+  .alertasTitle {
+    font-size: 1.6rem;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.8); /* Stronger shadow for map visibility */
+  }
+
+  .hudMain {
+    flex-direction: row; /* Horizontal Scroll */
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 1rem 1rem 2rem 1rem;
+    scroll-snap-type: x mandatory;
+    pointer-events: auto; /* Allow dragging */
+    max-height: 50vh; /* Takes up bottom 50% of the screen */
+    align-items: stretch;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .hudMain::-webkit-scrollbar {
+    display: none; /* Clean invisible scrollbar on mobile */
+  }
+
+  .sidebarHUD, .detailPanel {
+    min-width: 85vw; /* Each panel takes 85% of screen width */
+    max-width: 85vw;
+    scroll-snap-align: center;
+    margin-right: 1rem;
+    max-height: 100%;
+    border-radius: 24px;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.15); /* Strong shadow simulating bottom sheet */
+  }
+
+  .detailPanel {
+    margin-right: 0; /* Remove right margin from last item */
+  }
+
+  .glassPanel {
+    background: rgba(255, 255, 255, 0.95); /* Slightly less transparent on mobile for legibility */
+  }
+
+  .scrollArea {
+    padding: 1rem 1.25rem 2rem;
+  }
+
+  .hudSectionHeader {
+    padding: 1.25rem 1.5rem;
+  }
+}
