@@ -6,11 +6,6 @@ import {
   Brain,
   MapPin, 
   ShieldAlert, 
-  Settings2, 
-  Cpu, 
-  Activity, 
-  ChevronRight,
-  Database,
   BarChart3,
   Wrench
 } from 'lucide-react';

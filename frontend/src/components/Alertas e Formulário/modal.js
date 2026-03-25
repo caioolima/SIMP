@@ -6,7 +6,6 @@ import {
   ShieldAlert, 
   Clock, 
   Hash, 
-  Home, 
   Navigation, 
   Image as ImageIcon,
   CheckCircle2

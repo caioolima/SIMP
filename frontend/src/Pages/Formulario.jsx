@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase/firebaseConfig";
 import styles from './Formulario.module.css'; 
 import Principal from '../components/principal';
@@ -12,7 +12,6 @@ import {
   Search, 
   CheckCircle2, 
   AlertCircle,
-  FileText,
   Map,
   X,
   UploadCloud

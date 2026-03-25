@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import Principal from '../components/principal';
-import Footer from '../components/home/Footer';
 import Modal from '../components/Alertas e Formulário/modal';
 import PoleModal from '../components/Alertas e Formulário/PoleModal';
-import { ShieldAlert, FileText, Activity, MapPin, Calendar, Clock, Radio, Maximize2, ArrowUpRight } from 'lucide-react';
+import { ShieldAlert, FileText, Activity, MapPin, Radio, ArrowUpRight } from 'lucide-react';
 import styles from './Alertas.module.css';
 
 // Fix for Leaflet default marker icons in React

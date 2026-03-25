@@ -1,12 +1,7 @@
 import React from 'react';
 import { 
   ShieldCheck, 
-  CodeXml, 
-  Users2, 
-  Globe, 
-  Cpu, 
-  Activity,
-  Heart
+  Cpu
 } from 'lucide-react';
 import styles from './styles/Footer.module.css';
 
