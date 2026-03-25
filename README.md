@@ -1,4 +1,4 @@
-# SIMP — Sistema Inteligente de Monitoramento de Postes [v8.6.1]
+# SIMP — Sistema Inteligente de Monitoramento de Postes [v2.5 PRO]
 > **Enterprise Urban Infrastructure Command Center & Predictive Engine**
 
 O **SIMP** é uma solução Full-Stack de monitoramento industrial para gestão georreferenciada de postes inteligentes. A plataforma integra telemetria em tempo real, inteligência artificial preditiva e uma interface de comando de alta densidade para modernização de infraestruturas urbanas.
@@ -70,7 +70,7 @@ npm start
 ---
 
 ## 📜 Metadata
-- **Version**: 8.6.1 [Industrial Build]
+- **Version**: 2.5 [Industrial Build]
 - **Status**: Stable / Production Ready
 - **Author**: devcaio & AI Pair Programming
 
