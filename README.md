@@ -1,35 +1,30 @@
 # SIMP
 
-Sistema Inteligente de Monitoramento de Postes: uma plataforma full-stack para acompanhamento de ativos urbanos, gestão de alertas e abertura de chamados de campo em uma interface operacional com mapa, telemetria e visão analítica.
-
-## Destaque
-
-- case principal do portfólio do autor
-- projeto reconhecido com premiação, segundo o autor
-- foco em produto aplicado a infraestrutura urbana e operação em campo
+Plataforma full-stack para monitoramento de postes e gestão de ocorrências em infraestrutura urbana. O projeto centraliza mapa operacional, telemetria, alertas, consulta por ativo e registro de incidentes de campo em uma única interface.
 
 ## Visão Geral
 
-O SIMP foi pensado como um centro de comando para monitoramento de postes e ocorrências de infraestrutura urbana.
+O SIMP foi estruturado para apoiar rotinas de acompanhamento operacional de ativos urbanos, com foco em visibilidade, resposta a ocorrências e organização do fluxo entre operação e campo.
 
-O projeto combina:
+Na prática, a aplicação reúne:
 
-- painel operacional com mapa e telemetria
-- listagem de alertas críticos e ocorrências em campo
-- formulário para registro de incidentes
-- backend com API REST e persistência em MongoDB
-- envio de notificações por e-mail para novos chamados
+- dashboard com visão consolidada dos ativos monitorados
+- mapa interativo para navegação espacial e leitura de contexto
+- consulta detalhada de cada poste por rota dedicada
+- abertura de ocorrências com endereço, complemento e evidências
+- backend REST com persistência em MongoDB
+- notificação por e-mail para novos registros de campo
 
 ## Principais Funcionalidades
 
-- dashboard com visão operacional dos ativos monitorados
-- mapa interativo com marcadores e navegação por alertas
-- consulta de detalhes de cada poste por rota dedicada
-- classificação de alertas por grau de inclinação
+- acompanhamento de alertas operacionais
+- classificação de ocorrências por inclinação e criticidade
+- navegação por mapa com marcadores e detalhes do ativo
+- consulta de poste por nome e visualização individual
 - criação e atualização de alertas via API
-- registro de formulários de campo com status de verificação
-- integração com Firebase Storage para upload de imagem
-- endpoint de health check para monitoramento básico do backend
+- registro de formulários de campo com status inicial de verificação
+- upload de imagens com Firebase Storage
+- endpoint de health check para validação básica da API
 
 ## Stack
 
@@ -38,7 +33,8 @@ O projeto combina:
 - React 18
 - React Router
 - CSS Modules
-- Leaflet / React Leaflet
+- Leaflet
+- React Leaflet
 - Lucide React
 - Firebase Storage
 
@@ -52,6 +48,11 @@ O projeto combina:
 - CORS
 
 ## Arquitetura
+
+O repositório está dividido em duas aplicações principais:
+
+- `frontend`: interface web com dashboard, mapa, consulta de ativos e formulário
+- `backend`: API responsável por alertas, formulários, persistência e notificações
 
 ```text
 .
@@ -76,29 +77,29 @@ O projeto combina:
 
 ### Operação
 
-- visualiza o centro de comando com métricas e mapa
-- acompanha alertas ativos
-- abre a análise detalhada de um poste específico
+- acompanha o painel com métricas e alertas ativos
+- navega pelo mapa para localizar ativos e anomalias
+- consulta o detalhe de um poste específico
 
 ### Campo
 
-- registra uma ocorrência pelo formulário
-- envia dados de endereço e evidências
+- registra uma nova ocorrência
+- envia endereço, complemento e imagem
 - gera um item com status inicial de verificação
 
 ### Backend
 
-- recebe alertas de poste
-- classifica o status com base na inclinação
-- persiste dados no MongoDB
-- expõe rotas REST consumidas pelo frontend
+- recebe requisições de alertas e formulários
+- classifica o status do ativo com base na inclinação
+- persiste os dados no MongoDB
+- envia notificação por e-mail quando um novo formulário é criado
 
 ## Como Executar
 
 ### Requisitos
 
 - Node.js 18+
-- MongoDB ativo
+- MongoDB em execução
 
 ### Backend
 
@@ -115,7 +116,7 @@ SMTP_FROM=
 SMTP_TO=
 ```
 
-Instale as dependências e suba a API:
+Instalação e execução:
 
 ```bash
 cd backend
@@ -131,7 +132,7 @@ npm install
 npm start
 ```
 
-Aplicações:
+Endereços locais:
 
 - frontend: `http://localhost:3000`
 - backend: `http://localhost:5000`
@@ -146,23 +147,14 @@ Aplicações:
 - `POST /api/form`
 - `GET /health`
 
-## Melhorias Aplicadas Nesta Revisão
+## Roadmap Técnico
 
-- remoção de arquivos sensíveis do controle de versão
-- remoção de `node_modules` do repositório
-- extração de credenciais de e-mail para variáveis de ambiente
-- adição de `.env.example`
-- correção da rota de detalhes do poste no frontend
-- documentação reescrita com foco em arquitetura e produto
-
-## Próximos Passos Recomendados
-
-- adicionar screenshots do dashboard, mapa e formulário
-- criar um pequeno seed para demo local
-- adicionar testes básicos de API
-- incluir deploy documentado do frontend e backend
-- padronizar variáveis do Firebase via ambiente
+- adicionar screenshots do dashboard, mapa e fluxo de ocorrência
+- incluir seed para demonstração local
+- adicionar testes básicos para a API
+- documentar estratégia de deploy do frontend e backend
+- mover variáveis do Firebase para ambiente
 
 ## Licença
 
-Projeto de uso privado do autor para fins de portfólio e demonstração técnica.
+Projeto disponibilizado para demonstração técnica.
