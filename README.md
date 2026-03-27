@@ -26,6 +26,20 @@ Na prática, a aplicação reúne:
 - upload de imagens com Firebase Storage
 - endpoint de health check para validação básica da API
 
+## Screenshots
+
+### Visão Geral
+
+![Tela inicial do SIMP](assets/screenshots/home.png)
+
+### Centro de Comando
+
+![Dashboard operacional com mapa e métricas](assets/screenshots/alertas.png)
+
+### Registro de Ocorrência
+
+![Fluxo de abertura de incidente em campo](assets/screenshots/formulario.png)
+
 ## Stack
 
 ### Frontend
