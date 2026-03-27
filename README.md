@@ -26,7 +26,7 @@ Na prática, a aplicação reúne:
 - upload de imagens com Firebase Storage
 - endpoint de health check para validação básica da API
 
-## Screenshots
+## Capturas de Tela
 
 ### Visão Geral
 
@@ -163,7 +163,7 @@ Endereços locais:
 
 ## Roadmap Técnico
 
-- adicionar screenshots do dashboard, mapa e fluxo de ocorrência
+- adicionar capturas de tela do dashboard, mapa e fluxo de ocorrência
 - incluir seed para demonstração local
 - adicionar testes básicos para a API
 - documentar estratégia de deploy do frontend e backend
