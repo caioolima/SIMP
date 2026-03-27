@@ -2,6 +2,21 @@ const nodemailer = require('nodemailer');
 const path = require('path');
 const Form = require('../models/formModel');
 
+function createMailTransporter() {
+  const service = process.env.SMTP_SERVICE || 'gmail';
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+
+  if (!user || !pass) {
+    return null;
+  }
+
+  return nodemailer.createTransport({
+    service,
+    auth: { user, pass },
+  });
+}
+
 // Função para listar todos os formulários
 const listarFormularios = async (req, res) => {
   try {
@@ -40,81 +55,79 @@ const criarFormulario = async (req, res) => {
     const imagem = imagemUrl || 'Não enviada';
     const complementoTexto = complemento || 'Não informado';
 
-    // Enviar um e-mail quando o formulário for criado
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'SMTP_USER_REDACTED',
-        pass: 'SMTP_PASS_REDACTED',
-      },
-    });
+    const transporter = createMailTransporter();
+    const from = process.env.SMTP_FROM || process.env.SMTP_USER;
+    const to = process.env.SMTP_TO || process.env.SMTP_USER;
 
-    const mailOptions = {
-      from: 'SMTP_USER_REDACTED',
-      to: 'SMTP_TO_REDACTED',
-      subject: 'Novo formulário criado',
-      html: `
-        <html>
-          <head>
-            <style>
-                body {
-                    font-family: 'Arial', sans-serif;
-                    background-color: #e9f7f6;
-                    color: #333;
-                    padding: 20px;
-                }
-                .header {
-                    background-color: #2c3e50;
-                    padding: 20px;
-                    text-align: center;
-                    color: white;
-                    border-radius: 10px 10px 0 0;
-                }
-                .content p {
-                    font-size: 18px;
-                    line-height: 1.6;
-                }
-                .address {
-                    font-weight: bold;
-                    color: #e74c3c;
-                }
-            </style>
-          </head>
-          <body>
-            <div class="header">
-              <img src="cid:logo" alt="Logo" style="max-width: 150px;">
-              <h1>Formulário Criado</h1>
-            </div>
-            <div class="content">
-              <p><strong>CEP:</strong> ${cep}</p>
-              <p><strong>Rua:</strong> ${rua}</p>
-              <p><strong>Bairro:</strong> ${bairro}</p>
-              <p><strong>Cidade:</strong> ${cidade}</p>
-              <p><strong>Estado:</strong> ${estado}</p>
-              <p><strong>Complemento:</strong> ${complementoTexto}</p>
-              <p><strong>Imagem URL:</strong> ${imagem}</p>
-              <p><strong>Status:</strong> aguardando verificação</p>
-            </div>
-          </body>
-        </html>
-      `,
-      attachments: [
-        {
-          filename: 'logo.png',
-          path: path.join(__dirname, 'logo.png'),
-          cid: 'logo', // Identificador único para referenciar a imagem no corpo do e-mail
-        },
-      ],
-    };
+    if (transporter && from && to) {
+      const mailOptions = {
+        from,
+        to,
+        subject: 'Novo formulário criado',
+        html: `
+          <html>
+            <head>
+              <style>
+                  body {
+                      font-family: 'Arial', sans-serif;
+                      background-color: #e9f7f6;
+                      color: #333;
+                      padding: 20px;
+                  }
+                  .header {
+                      background-color: #2c3e50;
+                      padding: 20px;
+                      text-align: center;
+                      color: white;
+                      border-radius: 10px 10px 0 0;
+                  }
+                  .content p {
+                      font-size: 18px;
+                      line-height: 1.6;
+                  }
+                  .address {
+                      font-weight: bold;
+                      color: #e74c3c;
+                  }
+              </style>
+            </head>
+            <body>
+              <div class="header">
+                <img src="cid:logo" alt="Logo" style="max-width: 150px;">
+                <h1>Formulário Criado</h1>
+              </div>
+              <div class="content">
+                <p><strong>CEP:</strong> ${cep}</p>
+                <p><strong>Rua:</strong> ${rua}</p>
+                <p><strong>Bairro:</strong> ${bairro}</p>
+                <p><strong>Cidade:</strong> ${cidade}</p>
+                <p><strong>Estado:</strong> ${estado}</p>
+                <p><strong>Complemento:</strong> ${complementoTexto}</p>
+                <p><strong>Imagem URL:</strong> ${imagem}</p>
+                <p><strong>Status:</strong> aguardando verificação</p>
+              </div>
+            </body>
+          </html>
+        `,
+        attachments: [
+          {
+            filename: 'logo.png',
+            path: path.join(__dirname, 'logo.png'),
+            cid: 'logo',
+          },
+        ],
+      };
 
-    // Envia o e-mail
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log('Erro ao enviar o e-mail:', error);
-      } else {
-        console.log('E-mail enviado: ' + info.response);
-      }
-    });
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log('Erro ao enviar o e-mail:', error);
+        } else {
+          console.log('E-mail enviado: ' + info.response);
+        }
+      });
+    } else {
+      console.log('SMTP não configurado. Notificação por e-mail ignorada.');
+    }
 
     // Responde com o novo formulário
     res.status(201).json(novoFormulario);
